@@ -1,0 +1,29 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: eks-pv
+spec:
+  capacity:
+    storage: 1Gi
+  storageClassName: managed-nfs
+  accessModes:
+    - ReadWriteMany
+  nfs:
+    path: /mnt/catacombs/vmware/elastic
+    server: 192.168.69.151
+  persistentVolumeReclaimPolicy: Retain
+  claimRef:
+    namespace: kube-logging
+    name: eks-pvc
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: eks-pvc
+spec:
+  storageClassName: managed-nfs
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 1Gi
