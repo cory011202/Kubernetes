@@ -10,8 +10,14 @@ metadata:
 spec:
   selector: 
     app: nexus-server
-  type: NodePort  
+    #type: NodePort  
+  type: LoadBalancer  
   ports:
-    - port: 8081
+    - port: 80
+      name: nexus
       targetPort: 8081
       nodePort: 32000
+    - port: 8181
+      name: nexus-proxy
+      targetPort: 8181
+      nodePort: 32001
